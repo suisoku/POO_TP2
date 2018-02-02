@@ -3,6 +3,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="lib/jus.util.assertion.jar"/>
 	<classpathentry kind="lib" path="lib/jus.aoo.geometrie.jar"/>
+	<classpathentry kind="lib" path="lib/jus.aoo.turtle.doc.zip"/>
+	<classpathentry kind="lib" path="lib/jus.aoo.geometrie.doc.zip"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -57,11 +57,14 @@ public class Turtle {
 	* Fait avancer la tortue de d pas
 	* @param d la distance à parcourir
 	* @require argumentValide : d>=0
+	* @require destinationVisible : destinationVisible()
 	* @ensure CapInchange : _cap().equals(cap())
 	* @ensure DeplacementOk : new Vecteur(_position(),position()).module()-d < Vecteur.EPSILON
 	* @ensure capOk : new Vecteur(_position(),position()).colineaire(cap())
+	* @invariant : visible
 	*/
 	public void avancer(int d) {
+		if(!(destinationVisible(d, cap))) throw new Require("destinationVisible");
 		Point _position = new Point(position);
 		Vecteur v = new Vecteur(cap); v.homothetie(d);
 		position.translation(v);
@@ -76,11 +79,13 @@ public class Turtle {
 	* Fait reculer la tortue de d pas
 	* @param d la distance à parcourir
 	* @require argumentValide : d>=0
+	* @require destinationVisible : destinationVisible()
 	* @ensure CapInchange : _cap().equals(cap())
 	* @ensure DeplacementOk : new Vecteur(_position(),position()).module()-d < Vecteur.EPSILON
 	* @ensure capOk : new Vecteur(_position(),position()).colineaire(cap())
 	*/
 	public void reculer(int d) {
+		if(!(destinationVisible(d, cap.oppose() ))) throw new Require("destinationVisible");
 		Point _position = new Point(position);
 		Vecteur v = cap.oppose(); v.homothetie(d);
 		position.translation(v);
@@ -152,6 +157,21 @@ public class Turtle {
 			&& position.abscisse()  > - feuille.getWidth()/2
 			&& position.ordonnee()  < feuille.getHeight()/2
 			&& position.ordonnee()  > - feuille.getHeight()/2;
+	}
+	/**	
+	* verifie la visiblité de la tortue dans la feuille
+	* @invarient : destvisible : desvisible()
+	* @return    : true visible , false non visible
+	*/
+	public boolean destinationVisible(int d, Vecteur _cap) {
+		Point _pointFutur = new Point(position);
+		Vecteur v = new Vecteur(_cap); v.homothetie(d);
+		_pointFutur.translation(v);
+		
+		return _pointFutur.abscisse()  < feuille.getWidth()/2 
+				&& _pointFutur.abscisse()  > - feuille.getWidth()/2
+				&& _pointFutur.ordonnee()  < feuille.getHeight()/2
+				&& _pointFutur.ordonnee()  > - feuille.getHeight()/2;
 	}
 	 private void _invariant() {
 		 if(!visible()) throw new Invariant("visible");

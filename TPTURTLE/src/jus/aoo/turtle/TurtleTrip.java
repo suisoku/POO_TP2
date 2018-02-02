@@ -25,6 +25,7 @@ import jus.aoo.geometrie.DrawingSpace;
 import jus.aoo.geometrie.Point;
 import jus.aoo.geometrie._NewFigure;
 import jus.util.assertion.Invariant;
+import jus.util.assertion.Require;
 
 
 /**
@@ -177,6 +178,8 @@ public class TurtleTrip extends JApplet {
 			} catch (Invariant e1) {
 				JOptionPane.showConfirmDialog(null, e1.getMessage());
 				turtle.reculer(distance.getValue());
+			} catch (Require e2) {
+				JOptionPane.showConfirmDialog(null, e2.getMessage());
 			}
 		    }});
 		}
@@ -194,10 +197,12 @@ public class TurtleTrip extends JApplet {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 		      try {
 				turtle.reculer(distance.getValue());
-			} catch (Invariant e2) {
-				JOptionPane.showConfirmDialog(null, e2.getMessage());
+			} catch (Invariant e3) {
+				JOptionPane.showConfirmDialog(null, e3.getMessage());
 				turtle.avancer(distance.getValue());
-			}
+			}catch (Require e4) {
+					JOptionPane.showConfirmDialog(null, e4.getMessage());
+				}
 		    }});
 		}
 		return reculer;
