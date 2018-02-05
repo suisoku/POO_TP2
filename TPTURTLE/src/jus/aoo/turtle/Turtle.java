@@ -64,9 +64,9 @@ public class Turtle {
 	* @invariant : visible
 	*/
 	public void avancer(int d) {
-		if(!(destinationVisible(d, cap))) throw new Require("destinationVisible");
+		//if(!(destinationVisible(d, cap))) throw new Require("destinationVisible");
 		Point _position = new Point(position);
-		Vecteur v = new Vecteur(cap); v.homothetie(d);
+		Vecteur v = calculVecteurReel(d , cap);
 		position.translation(v);
 		image.translation(v);
 		if(!estLeve){
@@ -85,14 +85,16 @@ public class Turtle {
 	* @ensure capOk : new Vecteur(_position(),position()).colineaire(cap())
 	*/
 	public void reculer(int d) {
-		if(!(destinationVisible(d, cap.oppose() ))) throw new Require("destinationVisible");
+		//if(!(destinationVisible(d, cap.oppose() ))) throw new Require("destinationVisible");
 		Point _position = new Point(position);
-		Vecteur v = cap.oppose(); v.homothetie(d);
+		Vecteur v = calculVecteurReel(d , cap.oppose());
 		position.translation(v);
 		image.translation(v);
 		if(!estLeve) {
 			feuille.add(new Segment(_position,position));
 		}else feuille.repaint();
+		
+		_invariant();
 	}
 	/**	
 	* Fait tourner la à droite d'un angle a
@@ -153,16 +155,12 @@ public class Turtle {
 	* @return    : true visible , false non visible
 	*/
 	public boolean visible() {
-		return position.abscisse()  < feuille.getWidth()/2 
-			&& position.abscisse()  > - feuille.getWidth()/2
-			&& position.ordonnee()  < feuille.getHeight()/2
-			&& position.ordonnee()  > - feuille.getHeight()/2;
+		return position.abscisse()  <= feuille.getWidth()/2 
+			&& position.abscisse()  >= - feuille.getWidth()/2
+			&& position.ordonnee()  <= feuille.getHeight()/2
+			&& position.ordonnee()  >= - feuille.getHeight()/2;
 	}
-	/**	
-	* verifie la visiblité de la tortue dans la feuille
-	* @invarient : destvisible : desvisible()
-	* @return    : true visible , false non visible
-	*/
+	
 	public boolean destinationVisible(int d, Vecteur _cap) {
 		Point _pointFutur = new Point(position);
 		Vecteur v = new Vecteur(_cap); v.homothetie(d);
@@ -173,7 +171,38 @@ public class Turtle {
 				&& _pointFutur.ordonnee()  < feuille.getHeight()/2
 				&& _pointFutur.ordonnee()  > - feuille.getHeight()/2;
 	}
+	/**	
+	* verifie la visiblité de la tortue dans la feuille
+	* @invarient : destvisible : desvisible()
+	* @return    : true visible , false non visible
+	*/
 	 private void _invariant() {
 		 if(!visible()) throw new Invariant("visible");
 	 }
+	 
+	 public Vecteur calculVecteurReel(int d, Vecteur _cap) {
+			Point _point = new Point(position);
+			Vecteur v = new Vecteur(_cap); v.homothetie(d);
+			_point.translation(v);
+			
+			double ratioX = 1;
+			double ratioY = 1;
+			 
+			if(_point.abscisse() > feuille.getWidth()/ 2 )
+				ratioX = (feuille.getWidth()/2 - position.abscisse())/v.dx();
+			else if(_point.abscisse() < - feuille.getWidth()/ 2 )
+				ratioX = -( feuille.getWidth()/2 + position.abscisse())/v.dx();
+			
+			else if(_point.ordonnee() > feuille.getHeight()/ 2 )
+				ratioY = (feuille.getHeight()/2 - position.ordonnee())/v.dy();
+			else if(_point.ordonnee() < - feuille.getHeight()/ 2 ) {
+				ratioY = -(feuille.getHeight()/2 + position.ordonnee())/v.dy();
+			}
+			
+			// unchanged d*1*1 = d, changed ratioX d*0.c*1 = d*O.X
+			Vecteur z =  new Vecteur(_cap);
+			z.homothetie(d*ratioX*ratioY); 
+			return z;
+	 }
+	 
 }
