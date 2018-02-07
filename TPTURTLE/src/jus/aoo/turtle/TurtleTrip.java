@@ -23,6 +23,7 @@ import java.awt.GridLayout;
 
 import jus.aoo.geometrie.DrawingSpace;
 import jus.aoo.geometrie.Point;
+import jus.aoo.geometrie.Vecteur;
 import jus.aoo.geometrie._NewFigure;
 import jus.util.assertion.Invariant;
 import jus.util.assertion.Require;
@@ -62,6 +63,8 @@ public class TurtleTrip extends JApplet {
 	private JPanel jContentPane = null;
 	private JPanel control = null;
 	private DrawingSpace turtleArea = null;
+	private JButton allerA = null;
+	private JButton tournerVers = null;
 	private JButton avancer = null;
 	private JButton reculer = null;
 	private JButton droite = null;
@@ -163,6 +166,37 @@ public class TurtleTrip extends JApplet {
     }
 		return turtleArea;
 	}
+	
+	
+	/**
+	 * This method initializes allerA		
+	 * @return javax.swing.JButton	
+	 */
+	private JButton allerA() {
+		if(allerA == null){
+			allerA = new JButton();
+			allerA.setText("allerA");
+			allerA.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+						//action
+						
+		    }});
+		}
+		return allerA;
+	}
+	private JButton tournerVers() {
+		if(tournerVers == null){
+			tournerVers = new JButton();
+			tournerVers.setText("tournerVers");
+			tournerVers.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+						//action
+		    }});
+		}
+		return tournerVers;
+	}
+	
+	
 	/**
 	 * This method initializes avancer		
 	 * @return javax.swing.JButton	
@@ -279,6 +313,8 @@ public class TurtleTrip extends JApplet {
 			jPanel.setLayout(flowLayout);
 			jPanel.add(getAvancer(), null);
 			jPanel.add(getReculer(), null);
+			jPanel.add(allerA(), null);
+			jPanel.add(tournerVers(), null);
 			jPanel.add(getDroite(), null);
 			jPanel.add(getGauche(), null);
 			jPanel.add(getPlume(), null);
@@ -508,6 +544,7 @@ public class TurtleTrip extends JApplet {
     // et lancement du thread de gestion des �v�nements
     f.setVisible(true);
   }
+
 
   /** la liste des figures en cours */
   private _NewFigure newFigure;    

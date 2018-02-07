@@ -61,7 +61,7 @@ public class Turtle {
 	* @ensure CapInchange : _cap().equals(cap())
 	* @ensure DeplacementOk : new Vecteur(_position(),position()).module()-d < Vecteur.EPSILON
 	* @ensure capOk : new Vecteur(_position(),position()).colineaire(cap())
-	* @invariant : visible
+	* @invariant : visibsssle
 	*/
 	public void avancer(int d) {
 		//if(!(destinationVisible(d, cap))) throw new Require("destinationVisible");
@@ -75,6 +75,31 @@ public class Turtle {
 		
 		_invariant();
 	}
+	
+	public void allerA(Vecteur a) {
+		Point _position = new Point(position);
+		position.translation(a);
+		image.translation(a);
+		
+		if(!estLeve){
+			feuille.add(new Segment(_position,position));
+		}else feuille.repaint();
+		
+		_invariant();
+	}
+	
+	public void allerA(Vecteur a) {
+		Point _position = new Point(position);
+		position.translation(a);
+		image.translation(a);
+		
+		if(!estLeve){
+			feuille.add(new Segment(_position,position));
+		}else feuille.repaint();
+		
+		_invariant();
+	}
+	
 	/**	
 	* Fait reculer la tortue de d pas
 	* @param d la distance à parcourir
